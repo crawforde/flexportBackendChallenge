@@ -4,6 +4,8 @@
   "description": "glexport-test =============",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
     "test": "test"
   },
   "repository": {
@@ -18,5 +20,8 @@
   "homepage": "https://github.com/crawforde/flexportBackendChallenge#readme",
   "dependencies": {
     "express": "^4.16.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.12.1"
   }
 }
