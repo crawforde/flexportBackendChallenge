@@ -1,0 +1,22 @@
+{
+  "name": "flexportbackendchallenge",
+  "version": "1.0.0",
+  "description": "glexport-test =============",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/crawforde/flexportBackendChallenge.git"
+  },
+  "author": "Ellie Crawford",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/crawforde/flexportBackendChallenge/issues"
+  },
+  "homepage": "https://github.com/crawforde/flexportBackendChallenge#readme",
+  "dependencies": {
+    "express": "^4.16.2"
+  }
+}
