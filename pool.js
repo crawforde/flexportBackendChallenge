@@ -1,3 +1,5 @@
+// Referenced pg pool setup from one of my previous servers.
+
 "use strict";
 var pg = require('pg');
 
