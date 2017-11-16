@@ -2,7 +2,27 @@ var express = require('express');
 var app = express();
 var db = require('./pool.js');
 
-app.get('/api/vi/shipments', async function(req,res){
+const allowedSortParameters={
+  id: true,
+  name: true,
+  company_id: true,
+  created_at: true,
+  updated_at: true,
+  international_transportation_mode: true,
+  international_departure_date: true
+};
+
+
+app.get('/api/v1/shipments', async function(req,res){
+  var sortParam = 'id';
+  if(req.query.sort && allowedSortParameters.hasOwnProperty(req.query.sort)){
+    sortParam = req.query.sort;
+  }
+  sortParam = "s." + sortParam;
+  var sortDir = "ASC";
+  if(req.query.direction && req.query.direction.toLowerCase() === "desc" ){
+    sortDir = "DESC";
+  }
   try{
     result = await db.query(`
       SELECT
@@ -34,10 +54,9 @@ app.get('/api/vi/shipments', async function(req,res){
       WHERE
         c.id = $1
       ORDER BY
-        s.id,
+        ${sortParam} ${sortDir},
         p.id
     `,[req.query.company_id]);
-    console.log(result.rows);
     var records = [];
     result.rows.forEach((row)=>{
       var length = records.length;
