@@ -1,5 +1,6 @@
 var express = require('express');
 var app = express();
+var db = require('./pool.js');
 
 app.get('/',function(req,res){
   res.send('Server running!');
