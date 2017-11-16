@@ -12,16 +12,28 @@ const allowedSortParameters={
   international_departure_date: true
 };
 
+const allowedFilterParameters={
+  ocean: true,
+  truck: true
+};
+
 
 app.get('/api/v1/shipments', async function(req,res){
+  if(!req.query.company_id){
+    res.status(422).json({"errors": ["company_id is required"]});
+  }
   var sortParam = 'id';
-  if(req.query.sort && allowedSortParameters.hasOwnProperty(req.query.sort)){
+  if(req.query.sort && allowedSortParameters[req.query.sort]){
     sortParam = req.query.sort;
   }
   sortParam = "s." + sortParam;
   var sortDir = "ASC";
   if(req.query.direction && req.query.direction.toLowerCase() === "desc" ){
     sortDir = "DESC";
+  }
+  var transitMode = false;
+  if(req.query.international_transportation_mode && allowedFilterParameters[req.query.international_transportation_mode]){
+    transitMode = req.query.international_transportation_mode;
   }
   try{
     result = await db.query(`
@@ -52,6 +64,7 @@ app.get('/api/v1/shipments', async function(req,res){
         ) query2
           ON query2.product_id = p.id
       WHERE
+        ${transitMode ? `s.international_transportation_mode = '${transitMode}' AND` : ''}
         c.id = $1
       ORDER BY
         ${sortParam} ${sortDir},
@@ -76,6 +89,10 @@ app.get('/api/v1/shipments', async function(req,res){
         active_shipment_count: row.active_shipment_count
       });
     });
+    var page = req.query.page ? parseInt(req.query.page) : 1;
+    var per = req.query.page && req.query.per ? parseInt(req.query.per) : 4;
+    var startIndex = (page-1)*per;
+    records = records.slice(startIndex,startIndex+per);
     var data = {
       records
     };
