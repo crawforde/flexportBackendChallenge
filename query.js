@@ -109,7 +109,6 @@ const makeQueryString = function(sortParam, sortDir, transitMode){
               p.id`;
 };
 
-
 // Function to format raw data returned from the database:
 const formatData = function(rows, page, per){
   var records = [];
@@ -142,7 +141,6 @@ const paginate = function(records, page, per){
   var startIndex = (page-1)*per;
   return records.slice(startIndex,startIndex+per);
 };
-
 
 // Exports:
 module.exports = {

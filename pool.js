@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 // THIS FILE USES THE PG NPM PACKAGE TO CONNECT TO A Postgres DATABASE
 // EXPORTS:
 //    1) pool
@@ -11,7 +11,7 @@ var pg = require('pg');
 
 // Check for database url environment variable
 if (!process.env.DATABASE_URL) {
-  console.error("DATABASE_URL environment variable missing.");
+  console.error('DATABASE_URL environment variable missing.');
   process.exit(1);
 }
 
